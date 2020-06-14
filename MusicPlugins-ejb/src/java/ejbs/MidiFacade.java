@@ -30,7 +30,7 @@ public class MidiFacade extends AbstractFacade<Midi> {
         super(Midi.class);
     }
     
-    public List<Midi> findMidiByName(String midiName) {
+            public List<Midi> findMidiByName(String midiName) {
     return em.createQuery("SELECT m FROM Midi m WHERE m.name LIKE :midiname")
             .setParameter("midiname", midiName).getResultList();
     }

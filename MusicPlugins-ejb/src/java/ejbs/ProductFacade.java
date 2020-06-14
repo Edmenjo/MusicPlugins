@@ -61,5 +61,6 @@ public class ProductFacade extends AbstractFacade<Product> {
         return q.getResultList();
     }
     
+
     
 }

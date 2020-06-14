@@ -35,9 +35,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Midi.findByPrice", query = "SELECT m FROM Midi m WHERE m.price = :price")})
 public class Midi implements Serializable {
 
-    @Embedded
-    private Rate rate;
-    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,33 +42,23 @@ public class Midi implements Serializable {
     @NotNull
     @Column(name = "ID")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 30)
+    @Size(max = 20)
     @Column(name = "NAME")
     private String name;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(max = 30)
     @Column(name = "DESCRIPTION")
     private String description;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "PRICE")
-    private int price;
+    private Integer price;
 
+    @Embedded
+    private Rate rate;
+    
     public Midi() {
     }
 
     public Midi(Integer id) {
         this.id = id;
-    }
-
-    public Midi(Integer id, String name, String description, int price) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.price = price;
     }
 
     public Integer getId() {
@@ -98,31 +85,22 @@ public class Midi implements Serializable {
         this.description = description;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
-    
-    
-    // --------------------------------------------------------------------
-    
-    
-    
-    public Rate getRate(){
+
+        public Rate getRate() {
         return rate;
     }
-    
-    
-    public void setRate(Rate rate){
-        this.rate=rate;
-    }
-        
-    
-    // -------------------------------------------------------------------
 
+    public void setRate(Rate rate) {
+        this.rate = rate;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
