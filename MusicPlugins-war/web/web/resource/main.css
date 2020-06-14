@@ -1,0 +1,86 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 31-mar-2020, 18:11:25
+    Author     : zuzu
+*/
+    .forms {
+        width: 350px;
+        margin: auto;
+        background: rgba(0,0,0,0.3);
+        padding: 10px 20px;
+        box-sizing: border-box;
+        margin-top: 20px;
+        border-radius: 9px
+            
+    }
+
+    input, textarea {
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 7px;
+        font-size: 17px;
+        border: none;
+    }
+    
+    body {
+
+        background-image: url("/MusicPlugins-war/web/images/travis.jpg");  
+        background-size: 100vw 100vh;
+        background-attachment: fixed;
+        color: orange;
+    }
+
+    li{
+        float: left;
+        padding: 10px;
+        list-style: none;
+    }
+    
+    nav{
+
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 35px;
+        
+    }
+    
+    a{
+        text-decoration: none;
+        font-family: fantasy;
+        font-size: 30px;
+        color: whitesmoke;
+    }
+    
+    li:hover a{
+        color: orange;
+    }
+    
+    .header{
+        display: flex;
+        align-items: center;
+        
+            
+
+    }
+    
+    .cart{
+        justify-content: flex-end;
+    }
+    
+    .footer{
+        width: 23%;
+        display: flex;
+        align-items: center;
+        color: whitesmoke;
+        margin-left: auto;
+        margin-right: auto;
+        order: 2;
+    }
+    
+    h1, h3, span{
+        color: whitesmoke;
+    }
