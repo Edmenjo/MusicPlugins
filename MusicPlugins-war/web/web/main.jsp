@@ -43,8 +43,8 @@ and open the template in the editor.
         </form>
         </div>
             <form action=FrontController>
-            <input type="text" name="peticion" placeholder="Look for a Sample pack...">
-            <input type="hidden" name="command" value="fallo"><br>
+            <input type="text" name="peticion" placeholder="VST Management...">
+            <input type="hidden" name="command" value="VstManagementCommand"><br>
             
             <button type="submit" class="btn btn-primary btn-block">Submit</button>
                     

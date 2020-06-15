@@ -35,12 +35,11 @@ public class ProductFacade extends AbstractFacade<Product> {
         super(Product.class);
     }
     
-    public List<Product> findProductByName(String name) {
-    return em.createQuery("SELECT p FROM Product p WHERE p.name LIKE :productname")
-            .setParameter("productname", name).getResultList();
-    }
     
-    public List<Product> findByNameCriteria(String name, int index) {
+    
+    
+    //CRITERIA API WHERE, LIKE, ORDER BY
+    public List<Product> findByNameCriteria(String name) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Product> cq = cb.createQuery(Product.class);
         Root<Product> product = cq.from(Product.class);
@@ -50,17 +49,47 @@ public class ProductFacade extends AbstractFacade<Product> {
                 .where(
                         cb.like(product.get("name"), p),
                         cb.isNull(product.get("name")),
-                        cb.isNull(product.get("idSolicitude"))
+                        cb.isNull(product.get("id"))
                 )
                 .orderBy(cb.asc(product.get("price")));
 
         TypedQuery<Product> q = em.createQuery(cq);
         q.setParameter(p, "%" + name + "%");
-        q.setFirstResult(index);
         q.setMaxResults(3);
         return q.getResultList();
     }
     
-
+    //JPQL WHERE, LIKE, ORDER BY   |||   PAGINACION
+    public List<Product> findByName(String name) {
+        return em.createQuery("SELECT p FROM Product p "
+                + "WHERE p.name IS NOT NULL AND p.name "
+                + "LIKE :name ORDER BY p.price")
+                .setParameter("name", "%" + name + "%")
+                .setMaxResults(3)
+                .getResultList();
+    }
     
+    //JPQL INSERT
+    public void createProduct(int id, String name, String type, int price) {
+        em.createNativeQuery("INSERT INTO Product (ID,NAME,TYPE,PRICE) VALUES(?, ?,?,?)")
+                .setParameter(1, id)
+                .setParameter(2, name)
+                .setParameter(3, type)
+                .setParameter(4, price)
+                .executeUpdate();
+    }
+    
+    // JPQL DELETE
+    public void delete(Integer id) {
+        em.createQuery("DELETE FROM Product p WHERE .id=:id")
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+    
+    //JPQL UPDATE
+    public void removeProduct(Integer id) {
+        em.createQuery("UPDATE Product p SET p.id =null WHERE p.id=:id")
+                .setParameter("id", id)
+                .executeUpdate();
+    }
 }

@@ -40,4 +40,13 @@ public class MidiFacade extends AbstractFacade<Midi> {
                 .setParameter("id", id)
                 .executeUpdate();
     }
+    
+    public List<Midi> findByName(String name) {
+        return em.createQuery("SELECT m FROM Midi m "
+                + "WHERE m.name IS NOT NULL AND m.name "
+                + "LIKE :name ORDER BY m.price")
+                .setParameter("name", "%" + name + "%")
+                .setMaxResults(3)
+                .getResultList();
+    }
 }

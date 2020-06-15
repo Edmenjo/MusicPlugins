@@ -37,31 +37,19 @@ public class SearchDBByNameCommand extends FrontCommand{
             Logger.getLogger(SearchDBByNameCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        String id = request.getParameter("id");
         String nameSearch = request.getParameter("name"); 
-        String description = request.getParameter("description");
-        String price = request.getParameter("price");
         MidiFacade midiDB;
         try {
                 midiDB = InitialContext.doLookup("java:global/MusicPlugins/MusicPlugins-ejb/MidiFacade!ejbs.MidiFacade");
                 List<Midi> midis;
                 if (nameSearch != null){
                     
-                    midi.setName(nameSearch);
-                    midi.setDescription(description);
-                    midi.setPrice(Integer.parseInt(price));
                     
                     session.setAttribute(nameSearch,"nameSearch");
                     
-                    midiDB.create(midi);
                     
                     midis = midiDB.findMidiByName(nameSearch);
                     
-                    for(Midi midi: midis){
-                        if(midis != null){
-                            out.println("<p>"+midi.getName()+"</p>");
-                        }
-                    }
                 }
             } catch (NamingException ex) {
                 Logger.getLogger(SearchDBByNameCommand.class.getName()).log(Level.SEVERE, null, ex);

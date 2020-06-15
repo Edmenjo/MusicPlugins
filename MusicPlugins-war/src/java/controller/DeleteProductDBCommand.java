@@ -6,8 +6,8 @@
 package controller;
 
 import ejbs.Log;
-import ejbs.MidiFacade;
-import entities.Midi;
+import ejbs.ProductFacade;
+import entities.Product;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,39 +20,38 @@ import javax.servlet.http.HttpSession;
  *
  * @author zuzu
  */
-public class DeleteMidiDBCommand extends FrontCommand{
+public class DeleteProductDBCommand extends FrontCommand{
     private Log log;
     private HttpSession session;
     
     @Override
     public void process() throws ServletException, IOException {
         session = request.getSession(true);
+        log.setLog("DeleteProductDBCommand", "process");
         
         try {
             log = InitialContext.doLookup("java:global/MusicPlugins/MusicPlugins-ejb/Log!ejbs.Log");
         } catch (NamingException ex) { 
-            Logger.getLogger(DeleteMidiDBCommand.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DeleteProductDBCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        String idDel = request.getParameter("idDel");
-        session.setAttribute(idDel,"idDel");
-        //---------------------------     DELETE(id)    -----------------------------------
+        String id = request.getParameter("idDel");  
         
-        MidiFacade mf;
         try {
-            mf = InitialContext.doLookup("java:global/MusicPlugins/MusicPlugins-ejb/MidiFacade!ejbs.MidiFacade");
-            mf.delete(Integer.parseInt(idDel));
+            ProductFacade pf = InitialContext.doLookup("java:global/MusicPlugins/MusicPlugins-ejb/ProductFacade!ejbs.ProductFacade");
+            pf.delete(Integer.parseInt(id));
+            forward("/web/catalogue.jsp");
         } catch (NamingException ex) {
-            Logger.getLogger(DeleteMidiDBCommand.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DeleteProductDBCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
         
         
         
-        log.setLog("DeleteMidiDBCommand", "process");
+        
     
-        forward("/web/catalogue.jsp");
+        
     }
     
     

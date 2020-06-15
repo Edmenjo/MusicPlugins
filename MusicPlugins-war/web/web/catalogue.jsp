@@ -42,49 +42,6 @@
         <%  
              }  } 
         %>
-        <h2>Add midi</h2>
-        <form action="/MusicPlugins-war/FrontController">
-            <input type="text" name="id" placeholder="id">
-            <input type="text" name="name" placeholder="name">
-            <input type="text" name="description" placeholder="description">
-            <input type="text" name="price" placeholder="price">
-            <input type="text" name="rate" placeholder="rate">
-            <input type="hidden" name="command" value="AddMidiToDBCommand">
-            <button type="submit" >ADD</button>
-        </form>
-        <%
-              
-
-            %>
-           
-            
-            <h2>Search by name</h2>
-            <form action="/MusicPlugins-war/FrontController">
-                <input type="text" name="nameSearch">
-                <input type="hidden" name="command" value="SearchDBByNameCommand">
-                <button type="submit" >Search</button>
-            </form>
-            
-            <%
-                String nameSearch = (String) session.getAttribute("nameSearch");
-                
-                if(nameSearch != null){%>          
-            <%=nameSearch%>
-                
-                <% } %>
-            
-            
-            
-            <h2>Remove by id</h2>
-            <form action="/MusicPlugins-war/FrontController">
-                <input type="text" name="idDel">
-                <input type="hidden" name="command" value="DeleteMidiDBCommand">
-                <button type="submit" >DEL</button>
-            </form>
-            
-            <%
-            %>
-            
         </div>       
         
         <jsp:include page="resource/footer.jsp" />
