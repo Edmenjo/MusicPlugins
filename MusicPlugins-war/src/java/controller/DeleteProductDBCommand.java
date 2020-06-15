@@ -27,7 +27,7 @@ public class DeleteProductDBCommand extends FrontCommand{
     @Override
     public void process() throws ServletException, IOException {
         session = request.getSession(true);
-        log.setLog("DeleteProductDBCommand", "process");
+        
         
         try {
             log = InitialContext.doLookup("java:global/MusicPlugins/MusicPlugins-ejb/Log!ejbs.Log");
@@ -35,16 +35,18 @@ public class DeleteProductDBCommand extends FrontCommand{
             Logger.getLogger(DeleteProductDBCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        
+        log.setLog("DeleteProductDBCommand", "process");
+        
         String id = request.getParameter("idDel");  
         
         try {
             ProductFacade pf = InitialContext.doLookup("java:global/MusicPlugins/MusicPlugins-ejb/ProductFacade!ejbs.ProductFacade");
             pf.delete(Integer.parseInt(id));
-            forward("/web/catalogue.jsp");
+            forward("/web/vstmanagement.jsp");
         } catch (NamingException ex) {
             Logger.getLogger(DeleteProductDBCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         
         
         

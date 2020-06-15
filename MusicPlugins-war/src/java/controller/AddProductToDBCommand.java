@@ -28,7 +28,7 @@ public class AddProductToDBCommand extends FrontCommand{
     @Override
     public void process() throws ServletException, IOException {
         session = request.getSession(true);
-        log.setLog("AddProductToDBCommand", "process");
+        
         
         try {
             log = InitialContext.doLookup("java:global/MusicPlugins/MusicPlugins-ejb/Log!ejbs.Log");
@@ -49,13 +49,13 @@ public class AddProductToDBCommand extends FrontCommand{
                     
                 productDB.createProduct(Integer.parseInt(id),nameAdd,typeAdd,Integer.parseInt(priceAdd));
                     
-                 forward("/web/catalogue.jsp");
+                 forward("/web/vstmanagemente.jsp");
             } catch (NamingException ex) {
                 Logger.getLogger(AddProductToDBCommand.class.getName()).log(Level.SEVERE, null, ex);
             }
                 
             
-                
+                log.setLog("AddProductToDBCommand", "process");
             
         
         

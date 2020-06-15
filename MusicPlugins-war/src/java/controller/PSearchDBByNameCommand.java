@@ -48,14 +48,11 @@ public class PSearchDBByNameCommand extends FrontCommand{
                 if (nameSearch != null){
                     
                     product.setName(nameSearch);
-                    product.setType(type);
-                    product.setPrice(Integer.parseInt(price));
                     
                     session.setAttribute(nameSearch,"nameSearch");
                     
-                    productDB.create(product);
                     
-                    products = productDB.findByName(nameSearch);
+                    products = productDB.findByNameCriteria(nameSearch);
                     
                     for(Product product: products){
                         if(products != null){
@@ -69,6 +66,6 @@ public class PSearchDBByNameCommand extends FrontCommand{
         
         log.setLog("PSearchDBByNameCommand", "process");
     
-        forward("/web/catalogue.jsp");
+        forward("/web/vstmanagement.jsp");
     }
 }

@@ -38,6 +38,7 @@
             </form>
             
             <%
+                
                 String nameSearch = (String) session.getAttribute("nameSearch");
                 
                 if(nameSearch != null){%>          
