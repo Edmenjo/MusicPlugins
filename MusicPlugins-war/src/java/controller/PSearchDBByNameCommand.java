@@ -25,7 +25,6 @@ import javax.servlet.http.HttpSession;
 public class PSearchDBByNameCommand extends FrontCommand{
     private HttpSession session;
     private Log log;
-    private Product product = new Product();
     
     @Override
     public void process() throws ServletException, IOException {
@@ -36,36 +35,36 @@ public class PSearchDBByNameCommand extends FrontCommand{
         } catch (NamingException ex) {
             Logger.getLogger(PSearchDBByNameCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        String id = request.getParameter("id");
-        String nameSearch = request.getParameter("nameSearch"); 
-        String type = request.getParameter("type");
-        String price = request.getParameter("price");
-        ProductFacade productDB;
-        try {
-                productDB = InitialContext.doLookup("java:global/MusicPlugins/MusicPlugins-ejb/ProductFacade!ejbs.ProductFacade");
-                List<Product> products;
-                if (nameSearch != null){
-                    
-                    product.setName(nameSearch);
-                    
-                    session.setAttribute(nameSearch,"nameSearch");
-                    
-                    
-                    products = productDB.findByNameCriteria(nameSearch);
-                    
-                    for(Product product: products){
-                        if(products != null){
-                            out.println("<p>"+product.getName()+"</p>");
-                        }
-                    }
-                }
-            } catch (NamingException ex) {
-                Logger.getLogger(PSearchDBByNameCommand.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        
         log.setLog("PSearchDBByNameCommand", "process");
+        
+       
+        
+        String nameSearch = request.getParameter("nameSearch");
+        session.setAttribute("findName", nameSearch);
+        
+        
+        Integer index = 0;
+        session.setAttribute("indextofind", index);
+        calculateNPags(nameSearch);
     
         forward("/web/vstmanagement.jsp");
+    }
+    
+    private void calculateNPags(String name) {
+        try {
+            ProductFacade productDB = InitialContext.doLookup("java:global/MusicPlugins/MusicPlugins-ejb/ProductFacade!ejbs.ProductFacade");
+            Long countByName = productDB.countByName(name);
+
+            if (countByName > 3) {
+                countByName /= 3;
+
+            } else {
+                countByName = 0L;
+            }
+
+            session.setAttribute("indexes", countByName);
+        } catch (NamingException ex) {
+            Logger.getLogger(PSearchDBByNameCommand.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

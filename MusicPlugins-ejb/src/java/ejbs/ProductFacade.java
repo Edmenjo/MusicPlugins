@@ -39,7 +39,7 @@ public class ProductFacade extends AbstractFacade<Product> {
     
     
     //CRITERIA API WHERE, LIKE, ORDER BY
-    public List<Product> findByNameCriteria(String name) {
+    public List<Product> findByNameCriteria(String name, int index) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Product> cq = cb.createQuery(Product.class);
         Root<Product> product = cq.from(Product.class);
@@ -55,22 +55,24 @@ public class ProductFacade extends AbstractFacade<Product> {
 
         TypedQuery<Product> q = em.createQuery(cq);
         q.setParameter(p, "%" + name + "%");
+        q.setFirstResult(index);
         q.setMaxResults(3);
         return q.getResultList();
     }
     
     //JPQL WHERE, LIKE, ORDER BY   |||   PAGINACION
-    public List<Product> findByName(String name) {
+    public List<Product> findByName(String name, int index) {
         return em.createQuery("SELECT p FROM Product p "
                 + "WHERE p.name IS NOT NULL AND p.name "
                 + "LIKE :name ORDER BY p.price")
                 .setParameter("name", "%" + name + "%")
+                .setFirstResult(index)
                 .setMaxResults(3)
                 .getResultList();
     }
     
-    //JPQL INSERT
-    public void createProduct(int id, String name, String type, int price) {
+    //INSERT
+    public void insertProduct(int id, String name, String type, int price) {
         em.createNativeQuery("INSERT INTO Product (ID,NAME,TYPE,PRICE) VALUES(?, ?,?,?)")
                 .setParameter(1, id)
                 .setParameter(2, name)
@@ -79,17 +81,23 @@ public class ProductFacade extends AbstractFacade<Product> {
                 .executeUpdate();
     }
     
-    // JPQL DELETE
-    public void delete(Integer id) {
-        em.createQuery("DELETE FROM Product p WHERE .id=:id")
+    // DELETE
+    public void deleteProduct(Integer id) {
+        em.createQuery("DELETE FROM Product p WHERE p.id=:id")
                 .setParameter("id", id)
                 .executeUpdate();
     }
     
-    //JPQL UPDATE
-    public void removeProduct(Integer id) {
-        em.createQuery("UPDATE Product p SET p.id =null WHERE p.id=:id")
+    //UPDATE
+    public void updateProduct(Integer id) {
+        em.createQuery("UPDATE Product p SET p.id =100 WHERE p.id=:id")
                 .setParameter("id", id)
                 .executeUpdate();
+    }
+    
+    public Long countByName(String name) {
+        return (Long) em.createQuery("SELECT COUNT(p) FROM Product p WHERE p.id IS NOT NULL AND p.name LIKE :name ")
+                .setParameter("name", "%" + name + "%")
+                .getSingleResult();
     }
 }

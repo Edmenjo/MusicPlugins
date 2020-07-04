@@ -42,7 +42,7 @@ and open the template in the editor.
                     
         </form>
         </div>
-            <form action=FrontController>
+            <form action="/MusicPlugins-war/FrontController">
             <input type="text" name="peticion" placeholder="VST Management...">
             <input type="hidden" name="command" value="VstManagementCommand"><br>
             

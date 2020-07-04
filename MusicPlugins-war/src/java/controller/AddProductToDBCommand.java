@@ -35,6 +35,7 @@ public class AddProductToDBCommand extends FrontCommand{
         } catch (NamingException ex) {
             Logger.getLogger(AddProductToDBCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
+        log.setLog("AddProductToDBCommand", "process");
         
         String id = request.getParameter("id");
         String nameAdd = request.getParameter("name");
@@ -47,15 +48,14 @@ public class AddProductToDBCommand extends FrontCommand{
             try {
                 ProductFacade productDB = InitialContext.doLookup("java:global/MusicPlugins/MusicPlugins-ejb/ProductFacade!ejbs.ProductFacade");
                     
-                productDB.createProduct(Integer.parseInt(id),nameAdd,typeAdd,Integer.parseInt(priceAdd));
+                productDB.insertProduct(Integer.parseInt(id),nameAdd,typeAdd,Integer.parseInt(priceAdd));
                     
-                 forward("/web/vstmanagemente.jsp");
+                forward("/web/vstmanagement.jsp");
             } catch (NamingException ex) {
                 Logger.getLogger(AddProductToDBCommand.class.getName()).log(Level.SEVERE, null, ex);
             }
                 
             
-                log.setLog("AddProductToDBCommand", "process");
             
         
         
