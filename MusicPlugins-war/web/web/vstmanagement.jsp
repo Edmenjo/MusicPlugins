@@ -41,23 +41,6 @@
                 <button type="submit" >Search</button>
             </form>
             
-            <%
-            ProductFacade pf = InitialContext.doLookup("java:global/MusicPlugins/MusicPlugins-ejb/ProductFacade!ejbs.ProductFacade");
-            String name = (String) session.getAttribute("findName");
-            Integer index = (Integer) session.getAttribute("indextofind");
-            
-            
-            
-            List<Product> products;
-            if (name != null) {
-
-                products = pf.findByName(name, index);
-            } else {
-            products = pf.findByNameCriteria(name, index);
-            }
-        %>
-        
-       
             
             <h2>Remove by id</h2>
             <form onSubmit="if(!confirm('Do you really want to remove this plugin?')){return false;}">
@@ -74,7 +57,24 @@
             </form>
             
             
-             <%
+            <%
+            ProductFacade pf = InitialContext.doLookup("java:global/MusicPlugins/MusicPlugins-ejb/ProductFacade!ejbs.ProductFacade");
+            Object searchCalled =  session.getAttribute("searchCalled");
+        if( searchCalled != null ){
+            String name = (String) session.getAttribute("findName");
+            Integer index = (Integer) session.getAttribute("indextofind");
+            
+            
+            
+            List<Product> products;
+            if (name != null) {
+
+                products = pf.findByName(name, index);
+            } else {
+            products = pf.findByNameCriteria(name, index);
+            }
+        
+         
                     for (Product product: products) {
 
                 %>
@@ -143,6 +143,9 @@
                     </li>
                 </ul>
             </nav>
+                    <%
+                        }
+                    %>
         </div>       
         
         <jsp:include page="resource/footer.jsp" />

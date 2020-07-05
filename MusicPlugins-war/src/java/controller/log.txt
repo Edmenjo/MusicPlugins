@@ -1,2 +1,1 @@
-
-SingletonLog::noIteration<br> 
+El comando SelectRangeCommand no existe.

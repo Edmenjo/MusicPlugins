@@ -29,7 +29,8 @@ public class PSearchDBByNameCommand extends FrontCommand{
     @Override
     public void process() throws ServletException, IOException {
         session = request.getSession(true);
-        
+        Object searchCalled = true;
+        session.setAttribute("searchCalled", searchCalled);
         try {
             log = InitialContext.doLookup("java:global/MusicPlugins/MusicPlugins-ejb/Log!ejbs.Log");
         } catch (NamingException ex) {
@@ -51,6 +52,7 @@ public class PSearchDBByNameCommand extends FrontCommand{
     }
     
     private void calculateNPags(String name) {
+        
         try {
             ProductFacade productDB = InitialContext.doLookup("java:global/MusicPlugins/MusicPlugins-ejb/ProductFacade!ejbs.ProductFacade");
             Long countByName = productDB.countByName(name);
